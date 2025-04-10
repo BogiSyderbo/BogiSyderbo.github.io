@@ -1,1 +1,1 @@
-# BogiSyderbo.github.io
+# Bogi Syderbø
