@@ -1,0 +1,201 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Monaspace Neon', monospace;
+    background-color: #fff; 
+    color: #333;
+    line-height: 1.6;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Canvas Styling */
+#network-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0; 
+}
+
+
+.page-container {
+    max-width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1; /* Ensure content is above canvas */
+    background-color: transparent; /* Make sure container is see-through */
+}
+
+header {
+    padding: 50px 20px 30px 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+    background: transparent; /* Let canvas show */
+}
+
+header h1 {
+    font-size: 2.8em;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 5px;
+}
+
+header .tagline {
+    font-size: 1.2em;
+    color: #555;
+    margin-bottom: 20px;
+    font-weight: 300;
+}
+
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px 20px 40px 20px;
+    background: transparent; /* Let canvas show */
+}
+
+.profile-container {
+    max-width: 450px; 
+    width: 100%;
+}
+
+.profile-card {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    background-color: #fff;
+}
+
+/* Fade-in Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Apply animation to the card */
+.animated-card {
+    animation-name: fadeInUp;
+    animation-duration: 0.8s; /* Control speed */
+    animation-timing-function: ease-out;
+    animation-fill-mode: backwards;
+}
+
+.profile-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.profile-info {
+    padding: 25px 30px; 
+    background-color: #000;
+    color: #fff;
+}
+
+.profile-info .about-me {
+    font-size: 0.95em; 
+    color: #eee;
+    margin-bottom: 25px;
+    font-weight: 300;
+    line-height: 1.5;
+    border-bottom: 1px solid #333;
+    padding-bottom: 20px;
+}
+
+.profile-info h2 {
+    font-size: 1.4em; 
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding-bottom: 0px;
+}
+
+.profile-info p:not(.about-me) {
+    margin-bottom: 12px;
+    font-size: 0.95em; 
+    color: #eee;
+    font-weight: 300;
+    word-break: break-word;
+}
+
+.profile-info .label {
+    color: #aaa;
+    display: inline-block;
+    width: 100px; 
+    font-weight: 400;
+}
+
+.profile-info .email {
+    color: #fff;
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-color: #555;
+}
+.profile-info .email:hover {
+     text-decoration-color: #ccc;
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+    .profile-container {
+        max-width: 90%; /* Keep it relative */
+    }
+    header h1 {
+        font-size: 2.2em;
+    }
+    header .tagline {
+        font-size: 1.1em;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-container {
+        max-width: 95%;
+    }
+     header {
+        padding: 30px 15px 20px 15px;
+    }
+    header h1 {
+        font-size: 1.8em;
+    }
+    .profile-info {
+        padding: 20px 15px;
+    }
+    .profile-info .about-me {
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        font-size: 0.9em;
+    }
+    .profile-info h2 {
+       font-size: 1.3em;
+       margin-bottom: 15px;
+    }
+     .profile-info p:not(.about-me) {
+        font-size: 0.9em;
+     }
+    .profile-info .label {
+         display: block;
+         width: auto;
+         margin-bottom: 2px;
+         font-size: 0.85em;
+         color: #bbb;
+    }
+}
