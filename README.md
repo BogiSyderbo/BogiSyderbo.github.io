@@ -1,3 +1,5 @@
-# Bogi Syderbø
+# Bogi Syderbø - Personal website
 
-run `tsc` in the root directory to compile the TypeScript files to JavaScript.
+Implementation of my personal website.
+
+Run `tsc` in the root directory to compile the TypeScript files to JavaScript.
