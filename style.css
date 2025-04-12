@@ -26,7 +26,7 @@ body {
 
 .page-container {
     max-width: 100%;
-    margin: 0 auto;
+    margin: 100px auto 0 auto;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -36,13 +36,46 @@ body {
 }
 
 header {
-    padding: 50px 20px 30px 20px;
-    max-width: 1000px;
-    margin: 0 auto;
-    text-align: center;
-    background: transparent; /* Let canvas show */
+    background-color: rgba(255, 255, 255, 0.5);
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+nav ul li {
+    margin: 0 1rem;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 1rem;
+    display: flex;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #000;
+}
+
+.github-logo {
+    width: 20px;
+    height: 20px;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+}
 header h1 {
     font-size: 2.8em;
     font-weight: 700;
@@ -72,7 +105,7 @@ header .tagline {
 }
 
 .profile-card {
-    border-radius: 20px;
+    border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
     background-color: #fff;
