@@ -552,6 +552,7 @@ footer {
     align-items: center;
     justify-content: center;
     margin-right: 0.2rem;
+    flex-shrink: 0;
 }
 
 .send-btn svg {
