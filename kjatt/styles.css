@@ -303,28 +303,65 @@ footer {
 }
 
 /* Responsive */
+/* Responsive */
 @media (max-width: 768px) {
     h1 {
         font-size: 2.5rem;
     }
 
     .nav-links {
-        display: none;
-        /* Simple hide for now, could add burger menu */
+        /* display: none; Removed to make visible */
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: rgba(18, 18, 18, 0.95);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        padding: 1rem;
+        justify-content: space-around;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        z-index: 1000;
+    }
+
+    .nav-links li {
+        font-size: 0.9rem;
     }
 
     .hero {
         padding: 0 1rem;
+        min-height: 100vh;
+        /* Ensure full height */
+    }
+
+    .hero-content {
+        padding-top: 2rem;
     }
 
     .cta-group {
         flex-direction: column;
+        width: 100%;
+    }
+
+    .btn-primary,
+    .btn-outline {
+        width: 100%;
+    }
+
+    /* Hide language toggle in bottom nav to save space, or style it differently */
+    /* For now, let's keep it but maybe smaller */
+    .lang-toggle {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.8rem;
     }
 }
 
 /* Chat Interface */
 .chat-body {
     height: 100vh;
+    /* Fallback */
+    height: 100dvh;
+    /* Dynamic viewport height for mobile */
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -462,7 +499,8 @@ footer {
 }
 
 .chat-input-area {
-    padding: 2rem 0;
+    padding: 1.5rem 1rem;
+    /* Reduced padding for mobile */
     background: linear-gradient(to top, var(--bg-color) 80%, transparent);
     flex-shrink: 0;
     animation: fadeInUp 1s ease-out 0.2s backwards;
