@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2k Erg Training Guide</title>
+    <meta name="description" content="A starting guide and weekly schedule for training for a 2000 m row on the Concept2 RowErg.">
+    <style>
+        :root { color-scheme: light dark; }
+        body {
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.55;
+            max-width: 48rem;
+            margin: 0 auto;
+            padding: 1rem 1rem 3rem;
+        }
+        h2 { margin-top: 2.5rem; padding-bottom: 0.2rem; border-bottom: 1px solid #8886; }
+        h3 { margin-top: 1.5rem; }
+        /* contents in columns on wide screens, one column on phones */
+        nav ol { columns: 13rem; column-gap: 2.5rem; }
+        nav li { break-inside: avoid; }
+        .scroll { overflow-x: auto; }
+        table { border-collapse: separate; border-spacing: 0; margin: 0.75rem 0; }
+        th, td { border: 0 solid #8886; border-width: 0 1px 1px 0; padding: 0.35rem 0.6rem; text-align: left; vertical-align: top; }
+        tr > :first-child { border-left-width: 1px; }
+        thead th { border-top-width: 1px; }
+        th { background: #8882; }
+        .paces td { white-space: nowrap; }
+        /* keep the first column visible when a wide table scrolls sideways on a phone
+           (not in the week table at the top, where the first column is just Monday) */
+        .scroll table:not(.week) tr > :first-child { position: sticky; left: 0; background: Canvas; }
+        .scroll table:not(.week) th:first-child { background: linear-gradient(#8882, #8882) Canvas; }
+        /* equal day columns, each wide enough for "Threshold" in bold.
+           The min-width makes narrow screens scroll instead of squeezing the columns. */
+        .week { width: 100%; min-width: 44em; }
+        .week th { width: 5em; }
+        .week a { display: block; color: inherit; }
+        /* session colours in the weekly schedules (rest days stay plain) */
+        .speed { background: hsl(0 85% 55% / 0.22); }
+        .threshold { background: hsl(30 95% 50% / 0.25); }
+        .easy { background: hsl(125 55% 45% / 0.2); }
+        .firm { background: hsl(55 95% 50% / 0.3); }
+        .strength { background: hsl(215 85% 55% / 0.2); }
+        dt { font-weight: bold; margin-top: 0.5rem; }
+        footer { margin-top: 3rem; font-size: 0.9rem; }
+        .to-top {
+            position: fixed; right: 1rem; bottom: 1rem;
+            padding: 0.2rem 0.7rem; border: 1px solid #8886; border-radius: 1rem;
+            background: Canvas; text-decoration: none;
+        }
+        @media (max-width: 30rem) {
+            table { font-size: 0.9rem; }
+            th, td { padding: 0.3rem 0.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+
+<h1 id="top">2k erg training guide</h1>
+
+<p><strong>Weekly schedule:</strong> 4 rowing sessions (about 3–4½ hours in total) and 1 strength session (45–60 minutes). Each session links to its workout.</p>
+<div class="scroll">
+<table class="week">
+    <thead>
+        <tr><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="speed"><a href="#speed"><strong>Speed intervals</strong></a></td>
+            <td class="easy"><a href="#ut2">UT2</a></td>
+            <td>Rest</td>
+            <td class="threshold"><a href="#threshold"><strong>Threshold intervals</strong></a></td>
+            <td class="strength"><a href="#strength">Strength</a></td>
+            <td class="easy"><a href="#ut2">Long UT2</a></td>
+            <td>Rest</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+
+<p>
+    A starting guide for getting faster over 2000&nbsp;m on the Concept2 RowErg, based on the sources listed <a href="#sources">at the bottom</a>.
+    It's a general plan, not personal coaching, so adjust it to how you feel.
+</p>
+
+<nav>
+    <strong>Contents</strong>
+    <ol>
+        <li><a href="#short">The short version</a></li>
+        <li><a href="#setup">Set up the erg</a></li>
+        <li><a href="#technique">Technique basics</a></li>
+        <li><a href="#zones">Training zones</a></li>
+        <li><a href="#paces">Your training paces</a></li>
+        <li><a href="#week">Weekly schedule</a></li>
+        <li><a href="#workouts">The workouts</a></li>
+        <li><a href="#plan">12-week plan</a></li>
+        <li><a href="#test">Test day</a></li>
+        <li><a href="#progress">Tracking progress</a></li>
+        <li><a href="#words">Words and abbreviations</a></li>
+        <li><a href="#sources">Sources and further reading</a></li>
+    </ol>
+</nav>
+
+
+<h2 id="short">1. The short version</h2>
+<ol>
+    <li><strong>Most of your rowing should be easy.</strong> A 2k is roughly 80% aerobic, so building your aerobic engine matters more than anything else.</li>
+    <li><strong>Do two hard sessions a week:</strong> one at 2k pace (short intervals) and one at threshold (longer intervals). Everything else is easy, steady rowing.</li>
+    <li><strong>Easy means easy:</strong> you can hold a conversation, at 18–22 strokes per minute. Rowing easy days too hard leaves you too tired for the key sessions.</li>
+    <li><strong>Use a drag factor of 110–135 and keep it the same every time.</strong> A heavier stroke doesn't make you fitter. It just tires your legs sooner.</li>
+    <li><strong>Log every session.</strong> When a workout comes around again, try to beat last time's average split.</li>
+    <li><strong>Test your 2k every 6–12 weeks</strong>, not every week.</li>
+    <li><strong>On test day, don't go out too fast.</strong> Settle on your target split by 300&nbsp;m, hold it through the middle, and sprint the last 150–300&nbsp;m.</li>
+    <li><strong>Take at least one full rest day a week.</strong> Your body gets fitter while you recover, not while you row.</li>
+</ol>
+
+
+<h2 id="setup">2. Set up the erg</h2>
+
+<h3>Drag factor</h3>
+<p>
+    Use a drag factor of <strong>110–135</strong>: toward 110 if you're lighter, toward 135 if you're heavier.
+    A higher drag factor makes each stroke heavier but doesn't make you fitter. It tires your legs before
+    your heart and lungs get a proper workout. Even Olympic rowers use only about 112–130.
+</p>
+<ul>
+    <li>Use the same drag factor every time, in training and in tests, so your splits are comparable.</li>
+    <li>To see it on the PM5: <em>Main Menu → More Options → Display Drag Factor</em>, then row a few strokes.</li>
+</ul>
+
+<h3>Feet and monitor</h3>
+<ul>
+    <li>Set the foot stretcher so the strap goes across the widest part of your foot (about where the lowest shoelace is). Pull the strap tight enough that your feet don't slide.</li>
+    <li>Set up interval workouts with <em>Select Workout</em> on the monitor or with the ErgData app. ErgData uploads your results to the free Concept2 online logbook.</li>
+</ul>
+
+
+<h2 id="technique">3. Technique basics</h2>
+<p>
+    Good technique makes the same effort go faster and keeps your back happy. Watch the short videos on
+    <a href="https://www.concept2.com/training/rowing-technique">Concept2's technique page</a> at least
+    once. They explain it better than text can.
+</p>
+<ul>
+    <li><strong>Drive: legs → body → arms.</strong> Push with the legs first, arms straight until the handle passes your knees. Swing the body back as the legs finish, then pull the arms in. Brace your core so the leg push goes into the handle.</li>
+    <li><strong>Recovery: arms → body → legs.</strong> Arms out, lean forward from the hips, <em>then</em> bend the knees and slide forward.</li>
+    <li><strong>Push hard, come forward slowly.</strong> The recovery should take about twice as long as the drive.</li>
+    <li><strong>Finish:</strong> legs flat, lean back slightly, handle to the bottom of the ribs, elbows past the body, wrists flat.</li>
+    <li><strong>Catch</strong> (front of the stroke): shins about vertical, arms straight, body leaning slightly forward. Don't over-reach.</li>
+    <li><strong>Stay relaxed:</strong> hold the handle lightly and keep your shoulders down.</li>
+</ul>
+
+
+<h2 id="zones">4. Training zones</h2>
+<p>Rowers use five training zones. Most of your time should be in the first two.</p>
+
+<div class="scroll">
+<table>
+    <thead>
+        <tr>
+            <th>Zone</th>
+            <th>How it feels</th>
+            <th>Stroke rate</th>
+            <th>Heart rate (% of max)</th>
+            <th>Pace vs. your 2k split</th>
+            <th>Used for</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>UT2</strong><br>easy steady</td>
+            <td>Easy. You can hold a conversation.</td>
+            <td>18–22</td>
+            <td>55–70%</td>
+            <td>~15–25 s slower</td>
+            <td>Most of your rowing</td>
+        </tr>
+        <tr>
+            <td><strong>UT1</strong><br>firm steady</td>
+            <td>Working. Breathing harder, short sentences only.</td>
+            <td>20–24</td>
+            <td>70–80%</td>
+            <td>~10–18 s slower</td>
+            <td>Low-rate firm steady rows</td>
+        </tr>
+        <tr>
+            <td><strong>AT</strong><br>threshold</td>
+            <td>Hard but controlled. Roughly your 5k to 30-minute race pace.</td>
+            <td>24–28</td>
+            <td>80–85%</td>
+            <td>~6–12 s slower</td>
+            <td>Threshold intervals</td>
+        </tr>
+        <tr>
+            <td><strong>TR</strong><br>transport</td>
+            <td>Hard. Panting.</td>
+            <td>28–32</td>
+            <td>85–90%</td>
+            <td>~2–6 s slower</td>
+            <td>1000&nbsp;m or 2–4 minute intervals</td>
+        </tr>
+        <tr>
+            <td><strong>AN</strong><br>anaerobic</td>
+            <td>Very hard. Gasping.</td>
+            <td>32+</td>
+            <td>90–100%</td>
+            <td>At your 2k split or faster</td>
+            <td>250–500&nbsp;m intervals</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+<ul>
+    <li>The seconds in the pace column are rough. The <a href="#paces">pace table</a> has the exact numbers for your 2k time.</li>
+    <li>The usual max heart rate formula (220 − age) can be off by 10 or more beats. The highest number you see at the end of an all-out 2k is a better estimate.</li>
+    <li>On easy days, how it feels beats the pace target. If your breathing or heart rate says it's too hard, slow down.</li>
+</ul>
+
+
+<h2 id="paces">5. Your training paces</h2>
+<p>
+    Find your current 2k time (or your best guess) in the left column. The other columns are 500&nbsp;m
+    splits for each zone. Update them whenever you get a new 2k time.
+</p>
+<p>
+    <strong>No 2k time yet?</strong> Estimate it with <em>Paul's Law</em>: your split gets about 5
+    seconds slower every time the distance doubles. So a 500&nbsp;m at a 1:50 split works out to about
+    1:55 for 1000&nbsp;m and 2:00 for 2000&nbsp;m, which is an 8:00 2k.
+</p>
+
+<p><strong>Training paces per 500 m by 2k time</strong></p>
+<div class="scroll">
+<table class="paces">
+    <thead>
+        <tr><th>2k time</th><th>2k split</th><th>UT2</th><th>UT1</th><th>AT</th><th>TR</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>6:00</td><td>1:30.0</td><td>1:44–1:50</td><td>1:39–1:44</td><td>1:35–1:39</td><td>1:32–1:35</td></tr>
+        <tr><td>6:15</td><td>1:33.8</td><td>1:48–1:54</td><td>1:43–1:48</td><td>1:39–1:43</td><td>1:35–1:39</td></tr>
+        <tr><td>6:30</td><td>1:37.5</td><td>1:53–1:59</td><td>1:47–1:53</td><td>1:43–1:47</td><td>1:39–1:43</td></tr>
+        <tr><td>6:45</td><td>1:41.3</td><td>1:57–2:04</td><td>1:51–1:57</td><td>1:47–1:51</td><td>1:43–1:47</td></tr>
+        <tr><td>7:00</td><td>1:45.0</td><td>2:01–2:08</td><td>1:56–2:01</td><td>1:51–1:56</td><td>1:47–1:51</td></tr>
+        <tr><td>7:15</td><td>1:48.8</td><td>2:06–2:13</td><td>2:00–2:06</td><td>1:55–2:00</td><td>1:51–1:55</td></tr>
+        <tr><td>7:30</td><td>1:52.5</td><td>2:10–2:17</td><td>2:04–2:10</td><td>1:59–2:04</td><td>1:54–1:59</td></tr>
+        <tr><td>7:45</td><td>1:56.3</td><td>2:14–2:22</td><td>2:08–2:14</td><td>2:03–2:08</td><td>1:58–2:03</td></tr>
+        <tr><td>8:00</td><td>2:00.0</td><td>2:19–2:26</td><td>2:12–2:19</td><td>2:07–2:12</td><td>2:02–2:07</td></tr>
+        <tr><td>8:15</td><td>2:03.8</td><td>2:23–2:31</td><td>2:16–2:23</td><td>2:11–2:16</td><td>2:06–2:11</td></tr>
+        <tr><td>8:30</td><td>2:07.5</td><td>2:27–2:36</td><td>2:20–2:27</td><td>2:15–2:20</td><td>2:10–2:15</td></tr>
+        <tr><td>8:45</td><td>2:11.3</td><td>2:32–2:40</td><td>2:24–2:32</td><td>2:19–2:24</td><td>2:14–2:19</td></tr>
+        <tr><td>9:00</td><td>2:15.0</td><td>2:36–2:45</td><td>2:29–2:36</td><td>2:23–2:29</td><td>2:17–2:23</td></tr>
+        <tr><td>9:15</td><td>2:18.8</td><td>2:40–2:49</td><td>2:33–2:40</td><td>2:26–2:33</td><td>2:21–2:26</td></tr>
+        <tr><td>9:30</td><td>2:22.5</td><td>2:45–2:54</td><td>2:37–2:45</td><td>2:30–2:37</td><td>2:25–2:30</td></tr>
+    </tbody>
+</table>
+</div>
+
+<p>
+    AN is your 2k split or faster. Each zone is a share of your 2k power (UT2 55–65%, UT1 65–75%,
+    AT 75–85%, TR 85–95%), so the table works the same for fast and slow rowers.
+</p>
+
+
+<h2 id="week">6. Weekly schedule</h2>
+<p>
+    Every week has the same backbone: <strong>two key sessions</strong> (speed intervals and threshold
+    intervals) with easy rowing around them. The schedule at the top is the 4-day week plus a strength
+    session. If you have more or less time, use another column. The days are just an example, but keep
+    at least one easy or rest day between the two key sessions.
+</p>
+
+<div class="scroll">
+<table>
+    <thead>
+        <tr><th>Day</th><th>3 days a week</th><th>4 days a week</th><th>5–6 days a week</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>Mon</td><td class="speed"><strong>Speed intervals</strong></td><td class="speed"><strong>Speed intervals</strong></td><td class="speed"><strong>Speed intervals</strong></td></tr>
+        <tr><td>Tue</td><td>Rest</td><td class="easy">UT2</td><td class="easy">UT2</td></tr>
+        <tr><td>Wed</td><td class="easy">UT2</td><td>Rest</td><td class="threshold"><strong>Threshold intervals</strong></td></tr>
+        <tr><td>Thu</td><td>Rest</td><td class="threshold"><strong>Threshold intervals</strong></td><td class="easy">UT2</td></tr>
+        <tr><td>Fri</td><td class="threshold"><strong>Threshold intervals</strong></td><td>Rest</td><td>Rest</td></tr>
+        <tr><td>Sat</td><td>Rest</td><td class="easy">Long UT2</td><td class="firm">Low-rate UT1</td></tr>
+        <tr><td>Sun</td><td>Rest</td><td>Rest</td><td class="easy">Long UT2 (6th day, optional)</td></tr>
+        <tr><td>Time per week</td><td>about 2–3 hours</td><td>about 3–4½ hours</td><td>about 3½–6 hours</td></tr>
+    </tbody>
+</table>
+</div>
+
+<ul>
+    <li><strong>The two key sessions come first.</strong> If a week goes badly, skip an easy session, not a key one.</li>
+    <li><strong>UT2</strong> is 30–60 minutes of easy rowing, <strong>Long UT2</strong> 45–75 minutes. Every session is described in <a href="#workouts">the workouts</a>.</li>
+    <li><strong>Rest</strong> means no rowing. A walk, an easy bike ride or some stretching is fine.</li>
+    <li><strong>Strength:</strong> add a <a href="#strength">strength session</a> on a rest or easy day if you like.</li>
+    <li>
+        <strong>New to rowing?</strong> For the first 2–4 weeks, do only UT2 rowing plus one light
+        interval session such as 6 × 500&nbsp;m with 2:00 rest, and focus on technique. The
+        <a href="https://thepeteplan.wordpress.com/beginner-training/">Beginner Pete Plan</a> is a good
+        complete plan for this stage.
+    </li>
+</ul>
+
+
+<h2 id="workouts">7. The workouts</h2>
+<p>
+    Each key session rotates through three workouts: rotation week 1, then 2, then 3, then back to 1.
+    The rotation and pace targets come from the <a href="https://thepeteplan.wordpress.com/the-pete-plan/">Pete Plan</a>.
+    Each time a workout comes around again, try to beat your average split from last time.
+</p>
+
+<h3>Rules for every interval session</h3>
+<ul>
+    <li><strong>Warm up</strong> for about 10 minutes: start easy, build to moderate, and finish with a few short bursts at the session's pace.</li>
+    <li><strong>Rest</strong> between reps means very easy rowing or sitting still.</li>
+    <li><strong>The first time you do a workout</strong>, row every rep except the last at the target split, then go as hard as you can on the last one. Write down the average split. That's the number to beat next time.</li>
+    <li><strong>When you add a rep</strong> (or make a piece longer), keep the same split as last time.</li>
+</ul>
+
+<h3 id="speed">Speed intervals (2k pace), once a week</h3>
+<div class="scroll">
+<table>
+    <thead>
+        <tr><th>Rotation week</th><th>Workout</th><th>Rest</th><th>Target split</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>1</td><td>8 × 500&nbsp;m</td><td>3:30</td><td>2k split − 3 s</td></tr>
+        <tr><td>2</td><td>Pyramid: 250, 500, 750, 1000, 750, 500, 250&nbsp;m</td><td>1:30 for every 250&nbsp;m you just rowed (6:00 after the 1000)</td><td>2k split</td></tr>
+        <tr><td>3</td><td>4 × 1000&nbsp;m</td><td>5:00</td><td>2k split + 1 s</td></tr>
+    </tbody>
+</table>
+</div>
+<ul>
+    <li>Stroke rate: about what you'd race at, usually around 28–34.</li>
+    <li>New or short on time? Start with fewer reps (5–6 × 500&nbsp;m, 3 × 1000&nbsp;m, or a 250-500-750-500-250 pyramid) and add a rep each time around.</li>
+</ul>
+
+<h3 id="threshold">Threshold intervals, once a week</h3>
+<div class="scroll">
+<table>
+    <thead>
+        <tr><th>Rotation week</th><th>Workout</th><th>Rest</th><th>Target split</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>1</td><td>5 × 1500&nbsp;m</td><td>5:00</td><td>5k split</td></tr>
+        <tr><td>2</td><td>4 × 2000&nbsp;m</td><td>5:00</td><td>5k split + 0.5 s</td></tr>
+        <tr><td>3</td><td>3000&nbsp;m, 2500&nbsp;m, 2000&nbsp;m</td><td>5:00</td><td>5k split + 1 s</td></tr>
+    </tbody>
+</table>
+</div>
+<ul>
+    <li>Stroke rate: about 24–28.</li>
+    <li>No 5k time? Use your 2k split + 6–7 seconds (Paul's Law).</li>
+    <li>New or short on time? Do 3 × 1500&nbsp;m or 3 × 2000&nbsp;m, or 3 × 6 minutes with 3:00 rest, and build up from there.</li>
+</ul>
+
+<h3 id="ut2">UT2 (easy steady), all other rowing days</h3>
+<ul>
+    <li>30–60 minutes at your UT2 pace, 18–22 strokes per minute. Long UT2 is 45–75 minutes.</li>
+    <li>You can split it up, for example 3 × 15 minutes with a short break.</li>
+    <li>It should feel almost too easy. That's correct. Use the time to work on technique.</li>
+</ul>
+
+<h3 id="ut1">UT1 (low-rate firm steady), in the 5–6 day schedule</h3>
+<ul>
+    <li>Pick one: 30 minutes at 20 strokes per minute, 2 × 20 minutes at 22, or 3 × 10 minutes at 22–24, with 5:00 easy between pieces.</li>
+    <li>The low rate is the point: long, strong strokes with as much power per stroke as you can.</li>
+</ul>
+
+<h3 id="strength">Strength, 1–2 times a week</h3>
+<ul>
+    <li>Compound lifts: front squats, deadlifts, pendlay rows or pull-ups, presses and core work.</li>
+    <li>Do it on a rest or easy day, not the day before a key session.</li>
+</ul>
+
+
+<h2 id="plan">8. 12-week plan</h2>
+<p>This puts the weekly schedule on a timeline, ending in a 2k test.</p>
+
+<div class="scroll">
+<table>
+    <thead>
+        <tr><th>Week</th><th>Phase</th><th>What to do</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td><td>Baseline</td>
+            <td>Replace the speed session with a 2k test. Row it controlled: even pace, then finish strong. Use your time to find your paces in the <a href="#paces">table</a>. The rest of the week is easy.</td>
+        </tr>
+        <tr>
+            <td>2–4</td><td>Base</td>
+            <td>Start the rotation (weeks 1, 2, 3). Use the shorter versions of the workouts if you're new.</td>
+        </tr>
+        <tr>
+            <td>5–7</td><td>Build</td>
+            <td>Go through the rotation again with the full-length workouts. Beat your splits from weeks 2–4.</td>
+        </tr>
+        <tr>
+            <td>8–10</td><td>Build</td>
+            <td>Go through the rotation again and beat weeks 5–7. Optional: replace the week 8 speed session with a 2k test and update your paces.</td>
+        </tr>
+        <tr>
+            <td>11</td><td>Sharpen</td>
+            <td>Easy rowing as normal. Key sessions: 8 × 500&nbsp;m and 4 × 1000&nbsp;m. Use the first strokes of each rep to practise your start and settle on your target 2k split quickly.</td>
+        </tr>
+        <tr>
+            <td>12</td><td>Taper and test</td>
+            <td>Row about half your usual amount, mostly easy. Do a couple of hard pieces of 60–90 seconds early in the week, then only 20–30 second bursts in the last few days. Keep it to about 300 hard strokes in total for the week. Rest or row easy the day before, and test at the end of the week.</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+<p>After the test, take 2–3 easy days, update your paces with the new time and start again from week 2.</p>
+
+
+<h2 id="test">9. Test day</h2>
+
+<h3>Pick a target</h3>
+<ul>
+    <li>Target split = target time ÷ 4. For example, a 7:00 2k is a 1:45.0 split.</li>
+    <li>For a realistic target, use your training: about 3 seconds slower than your 8 × 500&nbsp;m average, or about 1 second faster than your 4 × 1000&nbsp;m average.</li>
+    <li>For your first tests, go for even splits, or start slightly slower than target and finish faster (a "negative split").</li>
+</ul>
+
+<h3>Before you start</h3>
+<ul>
+    <li>Take a rest day or an easy day before. Sleep, eat and drink as usual, and don't try anything new on test day.</li>
+    <li>Check the drag factor and set it to your usual number.</li>
+    <li>Set up a 2000&nbsp;m single-distance workout on the monitor.</li>
+</ul>
+
+<h3>Warm-up (about 20 minutes)</h3>
+<ol>
+    <li>7–10 minutes of light steady rowing, gradually pushing harder. Focus on good strokes, not speed.</li>
+    <li>3 × 10 strokes at 24, 28 and 32 strokes per minute, with at least 20 easy strokes between them.</li>
+    <li>1 × 20 strokes at race pace and race rate.</li>
+    <li>A few minutes easy, then go. You want to be warm, not tired.</li>
+</ol>
+
+<h3>Race plan</h3>
+<div class="scroll">
+<table>
+    <thead>
+        <tr><th>Where</th><th>What to do</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>Start (first 5–15 strokes)</td><td>A few hard, quick strokes to get the flywheel going, then lengthen out.</td></tr>
+        <tr><td>Up to 300&nbsp;m</td><td>Settle on your target split and race rate. The numbers jump around for the first 200–250&nbsp;m, which is normal.</td></tr>
+        <tr><td>300–1000&nbsp;m</td><td>Hold your target split. Think about one stroke at a time, and don't do maths in your head.</td></tr>
+        <tr><td>1000–1500&nbsp;m</td><td>This is where it starts to hurt, and where personal bests are won or lost. The third 500 is often 0.5–1 second slower than the others. Keep the strokes long and don't panic.</td></tr>
+        <tr><td>Last 500&nbsp;m</td><td>Start your sprint 300–150&nbsp;m from the end: rate up, split down. Only go when you're sure you can hold it to the finish.</td></tr>
+    </tbody>
+</table>
+</div>
+
+<p>
+    <strong>The most important rule: don't go out too fast.</strong> The first 500&nbsp;m always
+    feels easy. Going out too fast costs you more in the second half than it saves at the start.
+</p>
+<p>Afterwards, row 5–10 minutes very easy to cool down, then log your result and update your paces.</p>
+
+
+<h2 id="progress">10. Tracking progress</h2>
+<ul>
+    <li>Log every session: date, workout, average split, stroke rate and how it felt. ErgData sends it to the Concept2 logbook automatically, but a notebook works too.</li>
+    <li>Between tests, progress means beating your own numbers in the rotation. That's your main feedback.</li>
+    <li>If your resting heart rate in the morning is 5 or more beats above normal, take it easy: you may be getting ill or not recovering. After a cold, wait until it's back to normal, do two easy days, then carry on.</li>
+    <li>If you miss sessions, don't try to cram them in. Make up one or two at most, then carry on with the plan.</li>
+</ul>
+
+
+<h2 id="words">11. Words and abbreviations</h2>
+<dl>
+    <dt>Split</dt>
+    <dd>Time per 500&nbsp;m, the big number on the monitor. Lower is faster. Your 2k time ÷ 4 is your average split.</dd>
+    <dt>Stroke rate, spm</dt>
+    <dd>Strokes per minute. "r20" or "rate 20" means 20 strokes per minute.</dd>
+    <dt>8 × 500&nbsp;m / 3:30 rest</dt>
+    <dd>Eight 500&nbsp;m pieces with 3 minutes 30 seconds of rest after each one.</dd>
+    <dt>Drag factor</dt>
+    <dd>How heavy each stroke feels, measured by how quickly the flywheel slows down. See <a href="#setup">setup</a>.</dd>
+    <dt>UT2, UT1, AT, TR, AN</dt>
+    <dd>The training zones, from easiest to hardest. See <a href="#zones">training zones</a>.</dd>
+    <dt>Steady state</dt>
+    <dd>Continuous easy rowing, usually 30 minutes or more.</dd>
+    <dt>PB</dt>
+    <dd>Personal best.</dd>
+    <dt>Paul's Law</dt>
+    <dd>A rule of thumb: your split gets about 5 seconds slower each time the distance doubles.</dd>
+    <dt>Taper</dt>
+    <dd>Cutting training down before a test so you're fresh on the day.</dd>
+</dl>
+
+
+<h2 id="sources">12. Sources and further reading</h2>
+<ul>
+    <li>
+        Concept2: <a href="https://www.concept2.com/training/plans/2k-erg-test-12-week">2k test 12-week plan</a>
+        and <a href="https://www.concept2.com/training/plans/2k-erg-test-4-week">4-week plan</a>.
+        Official 3–4 day a week plans, with advice on warm-ups and even or negative splits.
+    </li>
+    <li>
+        Concept2 UK: <a href="https://trondhjems-roklub.no/files/c2_training_v1.pdf">Indoor Rowing Training Guide</a> (PDF, copy hosted by a rowing club).
+        Source of the training zones, heart rate and stroke rate bands, the taper rules, testing advice and technique faults. It's from 1999 but still solid.
+    </li>
+    <li>
+        <a href="https://thepeteplan.wordpress.com/the-pete-plan/">The Pete Plan</a> and the
+        <a href="https://thepeteplan.wordpress.com/beginner-training/">Beginner Pete Plan</a>.
+        The most recommended erg plan online, and the source of the interval rotation and pace targets used here.
+    </li>
+    <li>
+        <a href="https://www.row2k.com/features/391/mike-caviston-training-with-the-wolverine-plan-and-working-with-navy-seals/">Mike Caviston on the Wolverine Plan</a> (row2k).
+        A more demanding 2k plan built on lots of steady and low-rate work.
+    </li>
+    <li>
+        Rower Academy: <a href="https://roweracademy.com/wp-content/uploads/2019/09/RA-2k-Strategy.pdf">2K Erg Test: Settings, Warm-Up, and Race Plan</a> (PDF).
+        Source of the test-day warm-up and race plan.
+    </li>
+    <li>
+        British Rowing: <a href="https://www.britishrowing.org/2017/11/the-science-behind-the-perfect-2k-test/">The science behind the perfect 2k test</a>.
+        Why you shouldn't go out too fast.
+    </li>
+    <li>
+        Rowing Stronger: <a href="https://rowingstronger.com/2020/02/10/rowing-aerobic-or-anaerobic/">Is 2,000-meter rowing aerobic or anaerobic?</a>
+        Research showing a 2k is about 77–88% aerobic, plus why strength matters.
+    </li>
+    <li>
+        Concept2 on drag factor: <a href="https://www.concept2.com/training/articles/damper-setting">which setting to use</a>,
+        <a href="https://www.concept2.com/blog/the-damper-and-drag-of-olympians">what Olympic rowers use</a>, and
+        <a href="https://www.concept2.com/support/monitors/pm5/how-to-use">how to use the PM5</a> (including how to show the drag factor).
+    </li>
+    <li>Concept2: <a href="https://www.concept2.com/training/rowing-technique">Rowing technique</a> (with videos).</li>
+    <li>
+        Concept2: <a href="https://www.concept2.com/training/pace-calculator">Pace calculator</a> and
+        <a href="https://www.concept2.com/training/watts-calculator">watts calculator</a>.
+    </li>
+    <li><a href="https://www.c2forum.com/viewtopic.php?t=7708">Paul's Law</a> (Concept2 forum).</li>
+    <li>Watta: <a href="https://getwatta.com/calculators/training-pace-calculator">Training pace calculator</a>, which uses the same zones as a share of 2k power.</li>
+    <li>The <a href="https://www.c2forum.com/">Concept2 forum</a> is a good place to ask questions.</li>
+</ul>
+
+<footer>
+    <p>Last updated September 2026.</p>
+</footer>
+
+<a class="to-top" href="#top">↑ Top</a>
+
+</body>
+</html>
