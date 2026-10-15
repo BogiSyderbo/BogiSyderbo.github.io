@@ -16,13 +16,22 @@
   const byId = new Map(SOPPAR.map((s) => [s.id, s]));
   const has = (obj, key) => Object.prototype.hasOwnProperty.call(obj, key);
 
+  const byName = (a, b) => a.name.localeCompare(b.name, "fo");
+
+  const SORTS = {
+    nafn:     { name: "Heiti",       cmp: byName },
+    latin:    { name: "Latín",       cmp: (a, b) => a.latin.localeCompare(b.latin, "en") },
+  };
+
   const listEl = document.getElementById("list");
   const detailEl = document.getElementById("detail");
   const zoom = document.getElementById("zoom");
   const zoomImg = zoom.querySelector("img");
   const motionOk = window.matchMedia("(prefers-reduced-motion: no-preference)");
 
-  const state = { oki: "", matvirdi: "", q: "" };
+  const state = { oki: "", matvirdi: "", q: "", sort: "" };
+  const sortedList = () =>
+    state.sort ? [...SOPPAR].sort(SORTS[state.sort].cmp) : SOPPAR;
   let current = null; // species in the detail view, null while the list is shown
   let listScroll = 0;
 
@@ -53,8 +62,8 @@
 
   /* ---------- Overview ---------- */
 
-  function chips(name, legend, options) {
-    const items = [["", "Øll"], ...Object.entries(options).map(([key, o]) => [key, o.name])];
+  function chips(name, legend, options, allLabel = "Øll") {
+    const items = [["", allLabel], ...Object.entries(options).map(([key, o]) => [key, o.name])];
     const labels = items.map(([value, label]) => {
       const dot = name === "matvirdi" && value
         ? `<span class="dot dot--${value}" aria-hidden="true"></span>` : "";
@@ -83,6 +92,9 @@
       <div class="filters">
         ${chips("oki", "Vakstrarøki", OKI)}
         ${chips("matvirdi", "Matvirði", MATVIRDI)}
+        <button type="button" class="sort-toggle" data-sort-toggle>
+          <span class="sort-fo">A–Ø Føroyskt</span><span class="sort-la">A–Z Vísindaligt</span>
+        </button>
         <div class="search">
           <label class="visually-hidden" for="leita">Leita eftir soppi</label>
           ${ICON.search}
@@ -107,6 +119,12 @@
       filtersChanged();
     });
     listEl.addEventListener("click", (e) => {
+      if (e.target.closest("[data-sort-toggle]")) {
+        state.sort = state.sort === "nafn" ? "latin" : "nafn";
+        syncControls();
+        filtersChanged();
+        return;
+      }
       const a = e.target.closest("a.card");
       if (!a || !plainClick(e)) return;
       e.preventDefault();
@@ -120,11 +138,20 @@
     for (const input of listEl.querySelectorAll('input[type="radio"]')) {
       input.checked = input.value === state[input.name];
     }
+    const toggle = listEl.querySelector("[data-sort-toggle]");
+    const latin = state.sort === "latin";
+    toggle.setAttribute("aria-pressed", String(state.sort === "nafn" || latin));
+    toggle.dataset.mode = latin ? "la" : "fo";
+    toggle.title = latin ? "Røð eftir vísindaligum navni (trýst fyri føroyskt navn)"
+                         : "Røð í stavrøð (trýst aftur fyri vísindaligt navn)";
     const search = listEl.querySelector("#leita");
     if (search.value !== state.q) search.value = state.q;
   }
 
   function applyFilters() {
+    const grid = listEl.querySelector(".grid");
+    const items = new Map([...grid.children].map((li) => [li.dataset.id, li]));
+    for (const s of sortedList()) grid.appendChild(items.get(s.id));
     const q = fold(state.q.trim());
     let shown = 0;
     for (const li of listEl.querySelectorAll(".grid > li")) {
@@ -152,6 +179,7 @@
     if (state.oki) p.set("oki", state.oki);
     if (state.matvirdi) p.set("matvirdi", state.matvirdi);
     if (state.q.trim()) p.set("q", state.q.trim());
+    if (state.sort) p.set("sort", state.sort);
     const qs = p.toString();
     return qs ? `#?${qs}` : location.pathname + location.search;
   }
@@ -164,9 +192,10 @@
   /* ---------- Detail ---------- */
 
   function renderDetail(s) {
-    const i = SOPPAR.indexOf(s);
-    const prev = SOPPAR[(i - 1 + SOPPAR.length) % SOPPAR.length];
-    const next = SOPPAR[(i + 1) % SOPPAR.length];
+    const list = sortedList();
+    const i = list.indexOf(s);
+    const prev = list[(i - 1 + list.length) % list.length];
+    const next = list[(i + 1) % list.length];
     const rows = s.description
       .map(([label, text]) => `<div><dt>${esc(label)}</dt><dd>${rich(text)}</dd></div>`).join("");
     const size = s.size ? `${SEP}<span>${esc(s.size)}</span>` : "";
@@ -226,8 +255,9 @@
   }
 
   function step(delta) {
-    const i = SOPPAR.indexOf(current);
-    stepTo(SOPPAR[(i + delta + SOPPAR.length) % SOPPAR.length].id);
+    const list = sortedList();
+    const i = list.indexOf(current);
+    stepTo(list[(i + delta + list.length) % list.length].id);
   }
 
   detailEl.addEventListener("click", (e) => {
@@ -264,16 +294,18 @@
       const p = new URLSearchParams(hash.slice(1));
       const oki = p.get("oki") || "";
       const matvirdi = p.get("matvirdi") || "";
+      const sort = p.get("sort") || "";
       return {
         list: {
           oki: has(OKI, oki) ? oki : "",
           matvirdi: has(MATVIRDI, matvirdi) ? matvirdi : "",
           q: p.get("q") || "",
+          sort: has(SORTS, sort) ? sort : "",
         },
       };
     }
     const sopp = byId.get(decodeURIComponent(hash));
-    return sopp ? { sopp } : { list: { oki: "", matvirdi: "", q: "" } };
+    return sopp ? { sopp } : { list: { oki: "", matvirdi: "", q: "", sort: "" } };
   }
 
   function render(route) {

@@ -279,6 +279,40 @@ main {
   outline-offset: 1px;
 }
 
+.sort-toggle {
+  display: inline-grid; /* both labels share one cell, so the width never changes */
+  justify-items: center;
+  align-items: center;
+  padding: calc(0.55em + 3px) 1.15em;
+  border: 0;
+  border-radius: var(--radius-ui);
+  background: var(--tint);
+  font: 500 0.8125rem/1.2 var(--sans);
+  color: var(--ink-soft);
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.sort-toggle > span {
+  grid-area: 1 / 1;
+}
+
+.sort-toggle[data-mode="la"] .sort-fo,
+.sort-toggle:not([data-mode="la"]) .sort-la {
+  visibility: hidden;
+}
+
+.sort-toggle:hover {
+  color: var(--ink);
+}
+
+.sort-toggle[aria-pressed="true"] {
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: var(--shadow-soft);
+}
+
 .search {
   position: relative;
   flex: 1 1 200px;
