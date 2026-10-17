@@ -132,25 +132,80 @@ svg {
 /* ---------- Header & footer ---------- */
 
 .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  border-bottom: 1px solid var(--line);
+  background: rgb(249 241 228 / 0.88);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  view-transition-name: site-header;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 32px;
   max-width: var(--page);
+  min-height: 4rem;
   margin: 0 auto;
-  padding: clamp(20px, 3vw, 34px) var(--gutter) 0;
+  padding: 0 var(--gutter);
 }
 
 .wordmark {
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
+  padding: 0.4rem 0;
   font-size: 1.3rem;
   font-weight: 500;
   letter-spacing: 0.005em;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .wordmark-mark {
   width: auto;
-  height: 2.75rem;
+  height: 2.4rem;
 }
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-right: -0.9rem; /* optically align the last label with the page edge */
+}
+
+.nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  padding: 0.7em 0.9em;
+  border-radius: var(--radius-ui);
+  font: 500 0.8125rem/1.2 var(--sans);
+  color: var(--muted);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-link:hover {
+  background: var(--tint);
+  color: var(--ink);
+}
+
+.nav-link[aria-current="page"] {
+  color: var(--ink);
+}
+
+.nav-link[aria-current="page"] > span:last-child {
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.5em;
+}
+
 
 main {
   max-width: var(--page);
@@ -277,6 +332,40 @@ main {
 .segmented input:focus-visible + span {
   outline: 2px solid var(--focus);
   outline-offset: 1px;
+}
+
+.sort-toggle {
+  display: inline-grid; /* both labels share one cell, so the width never changes */
+  justify-items: center;
+  align-items: center;
+  padding: calc(0.55em + 3px) 1.15em;
+  border: 0;
+  border-radius: var(--radius-ui);
+  background: var(--tint);
+  font: 500 0.8125rem/1.2 var(--sans);
+  color: var(--ink-soft);
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.sort-toggle > span {
+  grid-area: 1 / 1;
+}
+
+.sort-toggle[data-mode="la"] .sort-fo,
+.sort-toggle:not([data-mode="la"]) .sort-la {
+  visibility: hidden;
+}
+
+.sort-toggle:hover {
+  color: var(--ink);
+}
+
+.sort-toggle[aria-pressed="true"] {
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: var(--shadow-soft);
 }
 
 .search {
@@ -709,6 +798,150 @@ main {
   height: 20px;
 }
 
+/* ---------- Eyðkenni ---------- */
+
+.guide {
+  max-width: 62rem;
+  margin: 0 auto;
+  padding-top: clamp(36px, 6vw, 80px);
+}
+
+.guide-title {
+  margin: 0;
+  font-size: clamp(2.3rem, 1.55rem + 2.7vw, 3.5rem);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.part {
+  margin-top: clamp(48px, 7vw, 88px);
+}
+
+.part h2 {
+  margin: 0;
+  font-size: clamp(1.6rem, 1.3rem + 1vw, 2.1rem);
+  font-weight: 500;
+  line-height: 1.15;
+}
+
+.part .lead {
+  max-width: var(--measure);
+  margin-top: 1rem;
+}
+
+/* The drawings are black line art on transparent paper; a tinted tile lifts them off the page. */
+.tile {
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius);
+  background: var(--tint);
+}
+
+.tile img {
+  max-width: 100%;
+  height: auto;
+}
+
+.part--split {
+  display: grid;
+  gap: 28px clamp(32px, 5vw, 72px);
+  align-items: start;
+}
+
+.part--split .tile {
+  margin: 0;
+  padding: clamp(20px, 4vw, 40px);
+}
+
+.part--split .tile img {
+  width: 100%;
+}
+
+@media (min-width: 900px) {
+  .part--split {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 28rem);
+  }
+}
+
+.shapes {
+  --scale: 0.36; /* every drawing keeps its true size relative to the others */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+  gap: clamp(28px, 3.5vw, 44px) clamp(18px, 2.4vw, 32px);
+  margin: clamp(28px, 4vw, 44px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.shape {
+  margin: 0;
+}
+
+.shape .tile {
+  aspect-ratio: 5 / 4;
+  min-height: 0;
+  padding: 12px;
+  overflow: hidden;
+}
+
+.shape img {
+  width: calc(var(--w) * var(--scale) * 1px);
+}
+
+.shape figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin-top: 0.8rem;
+}
+
+.shape-name {
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.shape-note {
+  font: 400 0.8125rem/1.45 var(--sans);
+  color: var(--muted);
+}
+
+@media (max-width: 600px) {
+  .shapes {
+    --scale: 0.27;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Gills: the two full pairs (a, b) are drawn twice as wide as a single gill, so they span two columns. */
+.shapes--gills {
+  --scale: 0.34;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.shapes--gills .is-wide {
+  grid-column: span 2;
+}
+
+.shapes--gills .is-wide .tile {
+  aspect-ratio: 5 / 2;
+}
+
+@media (max-width: 999px) {
+  .shapes--gills {
+    --scale: 0.4;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .shapes--gills {
+    --scale: 0.27;
+  }
+}
+
 /* ---------- Motion ---------- */
 
 @keyframes rise {
@@ -769,6 +1002,31 @@ main {
 
 /* ---------- Small screens ---------- */
 
+@media (max-width: 760px) {
+  /* The brand row scrolls away; the nav row stays pinned and scrolls sideways. */
+  .site-header {
+    top: -3.25rem;
+  }
+
+  .bar {
+    display: block;
+    min-height: 0;
+    padding: 0;
+  }
+
+  .wordmark {
+    display: flex;
+    height: 3.25rem;
+    padding: 0 var(--gutter);
+  }
+
+  .site-nav {
+    height: 2.75rem;
+    margin: 0;
+    padding: 0 calc(var(--gutter) - 0.9rem);
+  }
+}
+
 @media (max-width: 600px) {
   .search {
     max-width: none;
@@ -782,4 +1040,198 @@ main {
   .pager .name {
     font-size: 1.12rem;
   }
+}
+
+/* ---------- Quiz ---------- */
+
+.quiz {
+  padding-top: clamp(22px, 3.5vw, 40px);
+}
+
+.quiz-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 24px;
+  margin-bottom: clamp(16px, 2.5vw, 28px);
+  font: 500 0.6875rem/1 var(--sans);
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.quiz-bar p {
+  margin: 0;
+}
+
+.quiz-main {
+  display: grid;
+  align-items: start;
+  gap: clamp(22px, 3vw, 40px);
+}
+
+@media (min-width: 900px) {
+  .quiz-main {
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  }
+
+  .quiz-photo {
+    position: sticky;
+    top: 24px;
+  }
+}
+
+.quiz-photo {
+  margin: 0;
+}
+
+.quiz-photo img {
+  width: 100%;
+  border-radius: var(--radius);
+  background: var(--tint);
+  box-shadow: var(--shadow-soft);
+}
+
+.quiz-panel h1 {
+  margin: 0 0 1.4rem;
+  font-size: clamp(1.7rem, 1.3rem + 1.6vw, 2.4rem);
+  font-weight: 500;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+.choices {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.choice {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.answer {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  padding: 0.8em 2.6em 0.8em 1em;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-ui);
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--answer-size, 1.15rem);
+  line-height: 1.3;
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+  transition: border-color 0.2s ease, background-color 0.25s ease, transform 0.2s ease, opacity 0.25s ease;
+}
+
+.answer:hover:not([aria-disabled="true"]) {
+  border-color: var(--focus);
+  transform: translateY(-1px);
+}
+
+.answer[aria-disabled="true"] {
+  cursor: default;
+}
+
+.answer[aria-disabled="true"]:not(.is-wrong):not(.is-correct) {
+  opacity: 0.55;
+}
+
+.answer.is-wrong {
+  border-color: var(--eitrandi);
+  background: rgb(184 87 65 / 0.1);
+  color: var(--muted);
+  box-shadow: none;
+}
+
+.answer.is-correct {
+  border-color: var(--etandi);
+  background: rgb(109 138 89 / 0.16);
+}
+
+.answer.is-wrong::after,
+.answer.is-correct::after {
+  position: absolute;
+  top: 50%;
+  right: 1em;
+  transform: translateY(-50%);
+  font: 600 1rem/1 var(--sans);
+}
+
+.answer.is-wrong::after {
+  content: "✕";
+  color: var(--eitrandi);
+}
+
+.answer.is-correct::after {
+  content: "✓";
+  color: #4f6b3d;
+}
+
+.answer-latin {
+  margin-left: 0.35em;
+  font-size: 0.9em;
+  font-style: italic;
+  color: var(--muted);
+}
+
+.info {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 48px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-ui);
+  background: var(--surface);
+  color: var(--ink-soft);
+  box-shadow: var(--shadow-soft);
+  visibility: hidden; /* keeps its space reserved so the name button never resizes */
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.info.is-shown {
+  visibility: visible;
+  animation: rise 0.35s var(--ease) both;
+}
+
+.info:hover {
+  border-color: var(--focus);
+  color: var(--ink);
+}
+
+.info svg {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+.quiz-status {
+  min-height: 1.6em;
+  margin: 1rem 0 0;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+.quiz-button {
+  margin-top: 0.75rem;
+  padding: 0.85em 1.5em;
+  border: 0;
+  border-radius: var(--radius-ui);
+  background: var(--ink);
+  color: var(--paper);
+  font: 500 0.875rem/1.2 var(--sans);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.quiz-button:hover {
+  background: var(--ink-soft);
 }
