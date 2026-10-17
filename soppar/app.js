@@ -40,15 +40,8 @@
 
   /* ---------- Top navigation ---------- */
 
-  // Two sections: "Soppar" is the overview, "Eyðkenni" is its own page (eydkenni.html).
+  // The nav itself is rendered by nav.js; here we only mark the active section.
   const navEl = document.getElementById("site-nav");
-
-  function renderNav() {
-    navEl.innerHTML =
-      '<a class="nav-link" href="#" data-nav="soppar"><span>Soppar</span></a>' +
-      '<a class="nav-link" href="eydkenni.html" data-nav="eydkenni"><span>Eyðkenni</span></a>' +
-      '<a class="nav-link" href="#kviss" data-nav="kviss"><span>Kviss</span></a>';
-  }
 
   // Mark the section being shown: the overview and every species page belong to "Soppar".
   function syncNav() {
@@ -544,7 +537,6 @@
   /* ---------- Start ---------- */
 
   if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-  renderNav();
   renderList();
   document.documentElement.classList.add("is-arriving");
   setTimeout(() => document.documentElement.classList.remove("is-arriving"), 1200);
