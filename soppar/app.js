@@ -8,6 +8,7 @@
   const DETAIL_SIZES = "(min-width: 1200px) 1080px, 92vw";
 
   const ICON = {
+    info: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.8v.1"/></svg>',
     left: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5.5 8 12l6.5 6.5"/></svg>',
     right: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5.5 16 12l-6.5 6.5"/></svg>',
     search: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>',
@@ -25,6 +26,7 @@
 
   const listEl = document.getElementById("list");
   const detailEl = document.getElementById("detail");
+  const quizEl = document.getElementById("quiz");
   const zoom = document.getElementById("zoom");
   const zoomImg = zoom.querySelector("img");
   const motionOk = window.matchMedia("(prefers-reduced-motion: no-preference)");
@@ -34,6 +36,7 @@
     state.sort ? [...SOPPAR].sort(SORTS[state.sort].cmp) : SOPPAR;
   let current = null; // species in the detail view, null while the list is shown
   let listScroll = 0;
+  let inQuiz = false; // true while the quiz is shown
 
   /* ---------- Top navigation ---------- */
 
@@ -43,13 +46,19 @@
   function renderNav() {
     navEl.innerHTML =
       '<a class="nav-link" href="#" data-nav="soppar"><span>Soppar</span></a>' +
-      '<a class="nav-link" href="eydkenni.html" data-nav="eydkenni"><span>Eyðkenni</span></a>';
+      '<a class="nav-link" href="eydkenni.html" data-nav="eydkenni"><span>Eyðkenni</span></a>' +
+      '<a class="nav-link" href="#kviss" data-nav="kviss"><span>Kviss</span></a>';
   }
 
   // Mark the section being shown: the overview and every species page belong to "Soppar".
   function syncNav() {
-    const link = navEl.querySelector('[data-nav="soppar"]');
-    link.setAttribute("aria-current", current ? "true" : "page");
+    const mark = (name, value) => {
+      const link = navEl.querySelector(`[data-nav="${name}"]`);
+      if (value) link.setAttribute("aria-current", value);
+      else link.removeAttribute("aria-current");
+    };
+    mark("soppar", inQuiz ? "" : current ? "true" : "page");
+    mark("kviss", inQuiz ? "page" : "");
   }
 
   // Leaving a species page through the bar should open the overview at the top.
@@ -308,11 +317,143 @@
     e.preventDefault();
   });
 
+  /* ---------- Quiz ---------- */
+
+  const QUIZ_SIZES = "(min-width: 900px) 640px, 92vw";
+  // Endless quiz: mushrooms are drawn from a shuffled deck, which is reshuffled
+  // when empty, so nothing repeats until all of them have been shown.
+  const quiz = { deck: [], current: null, n: 0, score: 0, done: 0, misses: 0, answered: false };
+
+  const shuffle = (list) => {
+    const out = list.slice();
+    for (let i = out.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [out[i], out[j]] = [out[j], out[i]];
+    }
+    return out;
+  };
+
+  // Absolute link to a species page, for opening in a new tab.
+  const pageUrl = (id) => `${location.href.split("#")[0]}#${id}`;
+  const scoreText = () => `Rætt í fyrstu royndini: ${quiz.score} av ${quiz.done}`;
+
+  function draw() {
+    if (!quiz.deck.length) {
+      quiz.deck = shuffle(SOPPAR);
+      // don't show the same mushroom twice in a row across a reshuffle
+      if (quiz.deck[quiz.deck.length - 1] === quiz.current) quiz.deck.unshift(quiz.deck.pop());
+    }
+    return quiz.deck.pop();
+  }
+
+  function startQuiz() {
+    quiz.deck = [];
+    quiz.current = null;
+    quiz.n = 0;
+    quiz.score = 0;
+    quiz.done = 0;
+    renderQuestion();
+  }
+
+  function renderQuestion() {
+    const s = draw();
+    const options = shuffle([s, ...shuffle(SOPPAR.filter((x) => x !== s)).slice(0, 3)]);
+    quiz.current = s;
+    quiz.n++;
+    quiz.misses = 0;
+    quiz.answered = false;
+
+    const upcoming = quiz.deck[quiz.deck.length - 1];
+    if (upcoming) new Image().src = photo(upcoming); // warm the cache
+
+    const choices = options.map((o) => `<li class="choice" data-id="${o.id}">
+        <button class="answer" type="button"><span class="answer-text">${esc(o.name)} <span class="answer-latin" lang="la">${esc(o.latin)}</span></span></button>
+        <a class="info" href="${esc(pageUrl(o.id))}" target="_blank" rel="noopener"
+          aria-label="Upplýsingar um ${esc(o.name)} (opnast í nýggjum vindeyga)">${ICON.info}</a>
+      </li>`).join("");
+
+    quizEl.innerHTML = `
+      <section class="quiz">
+        <div class="quiz-bar">
+          <p>Spurningur ${quiz.n}</p>
+          <p class="quiz-score">${scoreText()}</p>
+        </div>
+        <div class="quiz-main">
+          <figure class="quiz-photo">
+            <img src="${photo(s)}" srcset="${srcset(s)}" sizes="${QUIZ_SIZES}"
+              width="${s.photo[0]}" height="${s.photo[1]}" alt="Mynd av soppinum">
+          </figure>
+          <div class="quiz-panel">
+            <h1 tabindex="-1">Hvør soppur er hetta?</h1>
+            <ul class="choices">${choices}</ul>
+            <p class="quiz-status" role="status"></p>
+            <button class="quiz-button quiz-next" type="button" hidden>Næsti spurningur</button>
+          </div>
+        </div>
+      </section>`;
+    quizEl.querySelector("h1").focus({ preventScroll: true });
+    fitAnswers();
+  }
+
+  // Answers never wrap: if the longest one doesn't fit, shrink the text of all four together.
+  function fitAnswers() {
+    const buttons = [...quizEl.querySelectorAll(".answer")];
+    if (!buttons.length) return;
+    quizEl.style.removeProperty("--answer-size");
+    let size = parseFloat(getComputedStyle(buttons[0]).fontSize);
+    const overflows = () => buttons.some((b) => {
+      const cs = getComputedStyle(b);
+      const room = b.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+      return b.firstElementChild.getBoundingClientRect().width > room + 0.5;
+    });
+    while (size > 11 && overflows()) {
+      size -= 0.5;
+      quizEl.style.setProperty("--answer-size", `${size}px`);
+    }
+  }
+
+  window.addEventListener("resize", () => { if (inQuiz) fitAnswers(); });
+  if (document.fonts) document.fonts.addEventListener("loadingdone", () => { if (inQuiz) fitAnswers(); });
+
+  function answer(btn) {
+    if (quiz.answered || btn.getAttribute("aria-disabled") === "true") return;
+    const status = quizEl.querySelector(".quiz-status");
+
+    if (btn.closest(".choice").dataset.id !== quiz.current.id) {
+      quiz.misses++;
+      btn.classList.add("is-wrong");
+      btn.setAttribute("aria-disabled", "true");
+      status.textContent = "Ikki rætt – royn aftur.";
+      return;
+    }
+
+    quiz.answered = true;
+    quiz.done++;
+    if (quiz.misses === 0) quiz.score++;
+    btn.classList.add("is-correct");
+    for (const row of quizEl.querySelectorAll(".choice")) {
+      row.querySelector(".answer").setAttribute("aria-disabled", "true");
+      row.querySelector(".info").classList.add("is-shown");
+    }
+    quizEl.querySelector(".quiz-score").textContent = scoreText();
+    status.textContent = "Rætt! Trýst á i-knøttin fyri at lesa meira um soppin.";
+    const next = quizEl.querySelector(".quiz-next");
+    next.hidden = false;
+    next.focus();
+  }
+
+  quizEl.addEventListener("click", (e) => {
+    const btn = e.target.closest(".answer");
+    if (btn) answer(btn);
+    else if (e.target.closest(".quiz-next")) { renderQuestion(); window.scrollTo(0, 0); }
+  });
+
   /* ---------- Routing ---------- */
 
-  // "#<id>" shows a species, "#?oki=…&matvirdi=…&q=…" a filtered overview.
+  // "#kviss" shows the quiz, "#<id>" a species, "#?oki=…&matvirdi=…&q=…" a filtered overview.
   function readUrl() {
     const hash = location.hash.slice(1);
+    if (hash === "kviss") return { quiz: true };
     if (hash.startsWith("?")) {
       const p = new URLSearchParams(hash.slice(1));
       const oki = p.get("oki") || "";
@@ -331,25 +472,42 @@
     return sopp ? { sopp } : { list: { oki: "", matvirdi: "", q: "", sort: "" } };
   }
 
+  function showOnly(view) {
+    listEl.hidden = view !== listEl;
+    detailEl.hidden = view !== detailEl;
+    quizEl.hidden = view !== quizEl;
+    if (view !== detailEl) detailEl.innerHTML = "";
+    if (view !== quizEl) quizEl.innerHTML = "";
+  }
+
   function render(route) {
-    if (route.sopp) {
-      if (!current) listScroll = window.scrollY;
+    const from = current;
+    const leavingList = !current && !inQuiz;
+
+    if (route.quiz) {
+      if (leavingList) listScroll = window.scrollY;
+      current = null;
+      inQuiz = true;
+      showOnly(quizEl);
+      document.title = `Kviss – ${SITE}`;
+      startQuiz();
+      window.scrollTo(0, 0);
+    } else if (route.sopp) {
+      if (leavingList) listScroll = window.scrollY;
+      inQuiz = false;
       current = route.sopp;
       renderDetail(current);
-      listEl.hidden = true;
-      detailEl.hidden = false;
+      showOnly(detailEl);
       document.title = `${current.name} – ${SITE}`;
       window.scrollTo(0, 0);
       detailEl.querySelector("h1").focus({ preventScroll: true });
     } else {
-      const from = current;
       current = null;
+      inQuiz = false;
       Object.assign(state, route.list);
       syncControls();
       applyFilters();
-      detailEl.hidden = true;
-      detailEl.innerHTML = "";
-      listEl.hidden = false;
+      showOnly(listEl);
       document.title = SITE;
       window.scrollTo(0, from ? listScroll : 0);
       const link = from && listEl.querySelector(`li[data-id="${from.id}"]:not([hidden]) a`);
