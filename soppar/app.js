@@ -71,7 +71,7 @@
       .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
   const countText = (n) => (n === 1 ? "1 soppur" : `${n} soppar`);
-  const photo = (s, small) => `myndir/${s.id}${small ? "-800" : ""}.jpg`;
+  const photo = (s, small) => `myndir/soppar/${s.id}${small ? "-800" : ""}.jpg`;
   const srcset = (s) => `${photo(s, true)} 800w, ${photo(s)} 1600w`;
   const plainClick = (e) => e.button === 0 && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey;
 
