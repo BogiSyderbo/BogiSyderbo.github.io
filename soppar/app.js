@@ -35,6 +35,28 @@
   let current = null; // species in the detail view, null while the list is shown
   let listScroll = 0;
 
+  /* ---------- Top navigation ---------- */
+
+  // Two sections: "Soppar" is the overview, "Eyðkenni" is its own page (eydkenni.html).
+  const navEl = document.getElementById("site-nav");
+
+  function renderNav() {
+    navEl.innerHTML =
+      '<a class="nav-link" href="#" data-nav="soppar"><span>Soppar</span></a>' +
+      '<a class="nav-link" href="eydkenni.html" data-nav="eydkenni"><span>Eyðkenni</span></a>';
+  }
+
+  // Mark the section being shown: the overview and every species page belong to "Soppar".
+  function syncNav() {
+    const link = navEl.querySelector('[data-nav="soppar"]');
+    link.setAttribute("aria-current", current ? "true" : "page");
+  }
+
+  // Leaving a species page through the bar should open the overview at the top.
+  document.querySelector(".site-header").addEventListener("click", (e) => {
+    if (e.target.closest("a") && plainClick(e)) listScroll = 0;
+  });
+
   const esc = (s) =>
     String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 
@@ -186,6 +208,7 @@
 
   function filtersChanged() {
     applyFilters();
+    syncNav();
     history.replaceState(null, "", listUrl());
   }
 
@@ -332,6 +355,7 @@
       const link = from && listEl.querySelector(`li[data-id="${from.id}"]:not([hidden]) a`);
       if (link) link.focus({ preventScroll: true });
     }
+    syncNav();
   }
 
   // Give the photo a shared name so it glides between the card and the detail view.
@@ -362,6 +386,7 @@
   /* ---------- Start ---------- */
 
   if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  renderNav();
   renderList();
   document.documentElement.classList.add("is-arriving");
   setTimeout(() => document.documentElement.classList.remove("is-arriving"), 1200);
