@@ -25,7 +25,7 @@
   header.innerHTML = `
     <div class="bar">
       <a class="wordmark" href="${NAV[0].href}">
-        <img class="wordmark-mark" src="myndir/soppur.png" width="52" height="160" alt="">
+        <img class="wordmark-mark" src="myndir/soppar/soppur.png" width="52" height="160" alt="">
         Soppar í Føroyum
       </a>
       <nav class="site-nav" id="site-nav" aria-label="Flokkar">${links}</nav>
