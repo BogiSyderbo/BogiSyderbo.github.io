@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="fo">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DS Handverk – Handgjørdar gávur úr træi</title>
+    <meta name="description" content="DS Handverk selur handgjørdar gávur úr træi: bollar, skeribretti og stakar.">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #cea972;
+            --ink: #1f160e;
+            --ink-soft: #4b3725;
+            --accent: #6e3519;
+            --cream: #f7ead0;
+            --panel: rgba(255, 244, 222, .4);
+            --panel-line: rgba(58, 36, 16, .2);
+        }
+
+        /* Wood tones for the illustrations */
+        .eik      { --wood: #b47c43; --wood-dark: #875a2b; --wood-hi: #d6a36a; }
+        .birki    { --wood: #d9b680; --wood-dark: #b08750; --wood-hi: #eed8ae; }
+        .kirsuber { --wood: #94502f; --wood-dark: #66331c; --wood-hi: #b97250; }
+
+        html { scroll-behavior: smooth; }
+        @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+        body {
+            margin: 0;
+            color: var(--ink);
+            background: radial-gradient(1100px 650px at 50% 0, rgba(255, 238, 205, .5), transparent 70%) no-repeat, var(--bg);
+            font-family: "EB Garamond", Georgia, serif;
+            font-size: 1.125rem;
+            line-height: 1.55;
+        }
+
+        /* Organic grain: fine dark and light specks */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='d' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .2 0 0 0 0 .11 0 0 0 0 .03 2.2 0 0 0 -1.12'/%3E%3C/filter%3E%3Cfilter id='l' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 .95 0 0 0 0 .85 0 2.2 0 0 -1.12'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23d)'/%3E%3Crect width='220' height='220' filter='url(%23l)'/%3E%3C/svg%3E");
+            opacity: .55;
+        }
+
+        /* Warm vignette */
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            background: radial-gradient(ellipse at center, transparent 55%, rgba(90, 50, 18, .14) 100%);
+        }
+
+        a { color: inherit; }
+
+        .wrap {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header */
+        .site-header {
+            text-align: center;
+            padding-top: 2.5rem;
+        }
+        .logo img {
+            display: block;
+            width: min(420px, 80vw);
+            height: auto;
+            margin: 0 auto 1.75rem;
+        }
+        .main-nav {
+            max-width: 760px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: .4rem 2rem;
+            padding: .7rem 1rem;
+            border-top: 2px solid var(--ink);
+            border-bottom: 2px solid var(--ink);
+            font-family: "Cinzel", serif;
+            font-size: .95rem;
+            letter-spacing: .08em;
+        }
+        .main-nav a {
+            text-decoration: none;
+            text-underline-offset: .3em;
+        }
+        .main-nav a:hover { color: var(--accent); text-decoration: underline; }
+        .kurvur {
+            display: inline-flex;
+            align-items: center;
+            gap: .45rem;
+        }
+        .kurvur svg { width: 1.15em; height: 1.15em; }
+        .tal {
+            min-width: 1.6em;
+            padding: 0 .35em;
+            border-radius: 999px;
+            background: var(--ink);
+            color: var(--cream);
+            font-family: "EB Garamond", Georgia, serif;
+            font-size: .85rem;
+            line-height: 1.6;
+            letter-spacing: 0;
+        }
+
+        /* Intro */
+        .intro {
+            max-width: 40rem;
+            margin: 3.5rem auto 4.5rem;
+            text-align: center;
+        }
+        .intro h1 {
+            margin: 0 0 1rem;
+            font-size: clamp(2.1rem, 5.5vw, 3.2rem);
+            font-style: italic;
+            font-weight: 400;
+            line-height: 1.12;
+            text-wrap: balance;
+        }
+        .intro p {
+            margin: 0 0 1.9rem;
+            color: var(--ink-soft);
+            font-size: 1.25rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: .8rem 1.6rem;
+            border: 0;
+            border-radius: 3px;
+            background: var(--ink);
+            color: var(--cream);
+            font-family: "Cinzel", serif;
+            font-size: .9rem;
+            letter-spacing: .08em;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color .2s;
+        }
+        .btn:hover, .btn:focus-visible { background: var(--accent); }
+        .btn:disabled { background: var(--accent); cursor: default; }
+
+        /* Section titles echo the double rules in the logo */
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            margin: 0 0 2rem;
+            font-family: "Cinzel", serif;
+            font-size: clamp(1.4rem, 3.4vw, 1.9rem);
+            font-weight: 400;
+            letter-spacing: .1em;
+        }
+        .section-title::before,
+        .section-title::after {
+            content: "";
+            flex: 1;
+            height: 4px;
+            border-top: 1.5px solid var(--ink);
+            border-bottom: 1.5px solid var(--ink);
+        }
+
+        section[id] { scroll-margin-top: 1.5rem; }
+
+        .card {
+            background: var(--panel);
+            border: 1px solid var(--panel-line);
+            border-radius: 6px;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .35), 0 12px 26px -16px rgba(70, 38, 12, .55);
+        }
+        .art {
+            display: block;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 3 / 2;
+            border-radius: 4px;
+            background: radial-gradient(ellipse at 50% 48%, rgba(255, 248, 232, .95), rgba(255, 248, 232, 0) 72%);
+        }
+
+        /* Categories */
+        .cat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+        .cat {
+            display: block;
+            padding: 1rem 1rem 1.5rem;
+            text-align: center;
+            text-decoration: none;
+            transition: transform .25s, box-shadow .25s;
+        }
+        .cat:hover {
+            transform: translateY(-3px);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .35), 0 18px 30px -16px rgba(70, 38, 12, .6);
+        }
+        .cat h3 {
+            margin: .7rem 0 .3rem;
+            font-family: "Cinzel", serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            letter-spacing: .1em;
+        }
+        .cat p {
+            margin: 0 auto .9rem;
+            max-width: 22rem;
+            color: var(--ink-soft);
+        }
+        .more {
+            font-family: "Cinzel", serif;
+            font-size: .85rem;
+            letter-spacing: .08em;
+            border-bottom: 1px solid currentColor;
+        }
+
+        /* Products */
+        .shelf { margin-top: 5rem; }
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+        }
+        .product {
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+        }
+        .product h3 {
+            margin: .8rem 0 .1rem;
+            font-size: 1.35rem;
+            font-weight: 500;
+            line-height: 1.25;
+        }
+        .meta {
+            margin: 0 0 1.1rem;
+            color: var(--ink-soft);
+            font-size: 1rem;
+        }
+        .buy {
+            margin-top: auto;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: .75rem;
+        }
+        .price {
+            font-size: 1.35rem;
+            font-weight: 500;
+        }
+        .buy .btn {
+            padding: .6rem 1rem;
+            font-size: .8rem;
+        }
+
+        /* About */
+        .about {
+            max-width: 54rem;
+            margin: 6rem auto 0;
+            text-align: center;
+        }
+        .about > p {
+            max-width: 38rem;
+            margin: 0 auto 2.5rem;
+            font-size: 1.25rem;
+        }
+        .values {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        .values div { padding: 1.25rem 1rem; }
+        .values h3 {
+            margin: 0 0 .35rem;
+            font-family: "Cinzel", serif;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: .08em;
+        }
+        .values p {
+            margin: 0;
+            color: var(--ink-soft);
+        }
+
+        footer {
+            margin-top: 5rem;
+            padding: 2rem 1rem 2.5rem;
+            border-top: 2px solid var(--ink);
+            text-align: center;
+            color: var(--ink-soft);
+            font-size: 1rem;
+        }
+        footer img {
+            display: block;
+            width: 140px;
+            height: auto;
+            margin: 0 auto .9rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Illustrations, coloured per wood type through --wood, --wood-dark and --wood-hi -->
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+        <defs>
+            <linearGradient id="shade" x1="0" x2="1" y1="0" y2="0">
+                <stop offset="0" stop-color="#fff" stop-opacity=".3"/>
+                <stop offset=".45" stop-color="#fff" stop-opacity="0"/>
+                <stop offset="1" stop-color="#000" stop-opacity=".3"/>
+            </linearGradient>
+            <linearGradient id="shade-top" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0" stop-color="#fff" stop-opacity=".22"/>
+                <stop offset="1" stop-color="#000" stop-opacity=".12"/>
+            </linearGradient>
+            <radialGradient id="glow">
+                <stop offset="0" stop-color="#ffd27a" stop-opacity=".75"/>
+                <stop offset="1" stop-color="#ffd27a" stop-opacity="0"/>
+            </radialGradient>
+
+            <symbol id="i-bolli" viewBox="0 0 240 160">
+                <ellipse cx="120" cy="140" rx="74" ry="7" fill="#3c2410" opacity=".22"/>
+                <path d="M96 124 98 136H142L144 124Z" style="fill: var(--wood-dark)"/>
+                <path d="M28 62C32 100 70 128 120 128S208 100 212 62A92 20 0 0 1 28 62Z" style="fill: var(--wood)"/>
+                <path d="M28 62C32 100 70 128 120 128S208 100 212 62A92 20 0 0 1 28 62Z" fill="url(#shade)"/>
+                <path d="M38 80C66 106 174 106 202 80M54 100C86 118 154 118 186 100M70 116C100 124 140 124 170 116" fill="none" style="stroke: var(--wood-dark)" stroke-width="1.5" opacity=".5"/>
+                <ellipse cx="120" cy="62" rx="92" ry="20" style="fill: var(--wood-hi)"/>
+                <ellipse cx="120" cy="63" rx="84" ry="16" style="fill: var(--wood-dark)"/>
+                <ellipse cx="120" cy="60" rx="76" ry="11" style="fill: var(--wood)" opacity=".7"/>
+                <ellipse cx="120" cy="64" rx="44" ry="6.5" fill="none" style="stroke: var(--wood-dark)" stroke-width="1.2" opacity=".55"/>
+                <ellipse cx="120" cy="65" rx="22" ry="3.5" fill="none" style="stroke: var(--wood-dark)" stroke-width="1.2" opacity=".55"/>
+            </symbol>
+
+            <symbol id="i-skeribretti" viewBox="0 0 240 160">
+                <ellipse cx="122" cy="138" rx="106" ry="6" fill="#3c2410" opacity=".22"/>
+                <path transform="translate(0 10)" fill-rule="evenodd" style="fill: var(--wood-dark)" d="M32 34H172Q184 34 184 46V62H212Q228 62 228 78T212 94H184V110Q184 122 172 122H32Q18 122 18 110V46Q18 34 32 34ZM214 78A7 7 0 1 0 200 78 7 7 0 1 0 214 78Z"/>
+                <path fill-rule="evenodd" style="fill: var(--wood)" d="M32 34H172Q184 34 184 46V62H212Q228 62 228 78T212 94H184V110Q184 122 172 122H32Q18 122 18 110V46Q18 34 32 34ZM214 78A7 7 0 1 0 200 78 7 7 0 1 0 214 78Z"/>
+                <path fill-rule="evenodd" fill="url(#shade-top)" d="M32 34H172Q184 34 184 46V62H212Q228 62 228 78T212 94H184V110Q184 122 172 122H32Q18 122 18 110V46Q18 34 32 34ZM214 78A7 7 0 1 0 200 78 7 7 0 1 0 214 78Z"/>
+                <path d="M26 52C70 44 116 58 178 48M26 68C76 62 104 76 178 66M26 90C58 96 92 80 112 86M124 86C144 90 162 93 178 88M26 108C80 100 128 112 178 104" fill="none" style="stroke: var(--wood-dark)" stroke-width="1.5" opacity=".5"/>
+                <ellipse cx="118" cy="86" rx="6" ry="3" fill="none" style="stroke: var(--wood-dark)" stroke-width="1.5" opacity=".6"/>
+                <path d="M32 37H172" style="stroke: var(--wood-hi)" stroke-width="2" stroke-linecap="round" opacity=".8"/>
+            </symbol>
+
+            <symbol id="i-staki-hogur" viewBox="0 0 240 160">
+                <g transform="translate(0 6)">
+                    <ellipse cx="96" cy="137" rx="34" ry="4" fill="#3c2410" opacity=".22"/>
+                    <circle cx="96" cy="8" r="18" fill="url(#glow)"/>
+                    <rect x="89" y="18" width="14" height="33" rx="2" fill="#f2e8d2"/>
+                    <rect x="89" y="18" width="14" height="33" rx="2" fill="url(#shade)"/>
+                    <path d="M96 18V13" stroke="#3a2a1a" stroke-width="1.5"/>
+                    <path d="M96 0C101 6 102 11 96 14 90 11 91 6 96 0Z" fill="#f3a53a"/>
+                    <path d="M96 5C98.5 8 99 11 96 13 93 11 93.5 8 96 5Z" fill="#ffe7a3"/>
+                    <path d="M80 50H112V56Q112 60 104 61Q108 62 107 64.5Q107 67 102 68L103 104Q108 105 108 108Q108 112 104 113Q106 120 116 123Q124 125 124 129V136H68V129Q68 125 76 123Q86 120 88 113Q84 112 84 108Q84 105 89 104L90 68Q85 67 85 64.5Q84 62 88 61Q80 60 80 56Z" style="fill: var(--wood)"/>
+                    <path d="M80 50H112V56Q112 60 104 61Q108 62 107 64.5Q107 67 102 68L103 104Q108 105 108 108Q108 112 104 113Q106 120 116 123Q124 125 124 129V136H68V129Q68 125 76 123Q86 120 88 113Q84 112 84 108Q84 105 89 104L90 68Q85 67 85 64.5Q84 62 88 61Q80 60 80 56Z" fill="url(#shade)"/>
+                    <path d="M68 131H124M80 53H112" style="stroke: var(--wood-dark)" stroke-width="1.5" opacity=".55"/>
+                    <path d="M87 108H105M88 64.5H104" style="stroke: var(--wood-hi)" stroke-width="1.5" opacity=".8"/>
+                </g>
+            </symbol>
+
+            <symbol id="i-staki-lagur" viewBox="0 0 240 160">
+                <g transform="translate(0 6)">
+                    <ellipse cx="152" cy="137" rx="30" ry="4" fill="#3c2410" opacity=".22"/>
+                    <circle cx="152" cy="51" r="16" fill="url(#glow)"/>
+                    <rect x="145" y="60" width="14" height="28" rx="2" fill="#f2e8d2"/>
+                    <rect x="145" y="60" width="14" height="28" rx="2" fill="url(#shade)"/>
+                    <path d="M152 60V55" stroke="#3a2a1a" stroke-width="1.5"/>
+                    <path d="M152 43C157 49 158 53 152 56 146 53 147 49 152 43Z" fill="#f3a53a"/>
+                    <path d="M152 47.5C154.5 50 155 53 152 55 149 53 149.5 50 152 47.5Z" fill="#ffe7a3"/>
+                    <path d="M137 88H167V94Q167 98 160 99Q163 100 162 102Q162 104 158 104.5L159 114Q166 118 172 122Q176 124 176 128V136H128V128Q128 124 132 122Q138 118 145 114L146 104.5Q142 104 142 102Q141 100 144 99Q137 98 137 94Z" style="fill: var(--wood)"/>
+                    <path d="M137 88H167V94Q167 98 160 99Q163 100 162 102Q162 104 158 104.5L159 114Q166 118 172 122Q176 124 176 128V136H128V128Q128 124 132 122Q138 118 145 114L146 104.5Q142 104 142 102Q141 100 144 99Q137 98 137 94Z" fill="url(#shade)"/>
+                    <path d="M128 131H176M137 91H167" style="stroke: var(--wood-dark)" stroke-width="1.5" opacity=".55"/>
+                    <path d="M143 102H161" style="stroke: var(--wood-hi)" stroke-width="1.5" opacity=".8"/>
+                </g>
+            </symbol>
+        </defs>
+    </svg>
+
+    <header class="site-header wrap">
+        <a class="logo" href="#"><img src="dsh.svg" alt="DS Handverk" width="807" height="502"></a>
+        <nav class="main-nav" aria-label="Høvuðsvalmynd">
+            <a href="#bolli">Bolli</a>
+            <a href="#skeribretti">Skeribretti</a>
+            <a href="#stakar">Stakar</a>
+            <a href="#um-okkum">Um okkum</a>
+            <span class="kurvur" aria-live="polite">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M3 9H21L19 20H5Z M8 9 12 3 16 9"/></svg>
+                Kurvur <span class="tal" id="kurv-tal">0</span>
+            </span>
+        </nav>
+    </header>
+
+    <main class="wrap">
+        <section class="intro">
+            <h1>Gávur úr træi, gjørdar við hond</h1>
+            <p>Hvør lutur er skorin, pussaður og viðgjørdur við náttúrligari olju í okkara lítla verkstaði. Eingir tveir lutir eru eins.</p>
+            <a class="btn" href="#vorubolkar">Sí vørurnar</a>
+        </section>
+
+        <section id="vorubolkar" aria-labelledby="vorubolkar-h">
+            <h2 class="section-title" id="vorubolkar-h">Vørubólkar</h2>
+            <div class="cat-grid">
+                <a class="cat card eik" href="#bolli">
+                    <svg class="art" viewBox="0 0 240 160" aria-hidden="true"><use href="#i-bolli"/></svg>
+                    <h3>Bolli</h3>
+                    <p>Djúpir og grunnir bollar til frukt og salat – ella bara til prýði.</p>
+                    <span class="more">Sí úrvalið →</span>
+                </a>
+                <a class="cat card kirsuber" href="#skeribretti">
+                    <svg class="art" viewBox="0 0 240 160" aria-hidden="true"><use href="#i-skeribretti"/></svg>
+                    <h3>Skeribretti</h3>
+                    <p>Haldgóð skeribretti, ið tola dagliga nýtslu í køkinum.</p>
+                    <span class="more">Sí úrvalið →</span>
+                </a>
+                <a class="cat card eik" href="#stakar">
+                    <svg class="art" viewBox="0 0 240 160" aria-hidden="true"><use href="#i-staki-hogur"/><use href="#i-staki-lagur"/></svg>
+                    <h3>Stakar</h3>
+                    <p>Ljósastakar, ið gera myrku kvøldini hugnalig.</p>
+                    <span class="more">Sí úrvalið →</span>
+                </a>
+            </div>
+        </section>
+
+        <section class="shelf" id="bolli" aria-labelledby="bolli-h">
+            <h2 class="section-title" id="bolli-h">Bolli</h2>
+            <div class="products">
+                <article class="product card eik">
+                    <svg class="art" viewBox="0 0 240 160" role="img" aria-label="Fruktbolli úr eik"><use href="#i-bolli"/></svg>
+                    <h3>Fruktbolli</h3>
+                    <p class="meta">Eik · Ø 28 cm</p>
+                    <div class="buy"><span class="price">650 kr.</span><button class="btn" type="button">Legg í kurvin</button></div>
+                </article>
+                <article class="product card kirsuber">
+                    <svg class="art" viewBox="0 0 240 160" role="img" aria-label="Salatbolli úr kirsuberjatræi"><use href="#i-bolli"/></svg>
+                    <h3>Salatbolli</h3>
+                    <p class="meta">Kirsuberjatræ · Ø 32 cm</p>
+                    <div class="buy"><span class="price">850 kr.</span><button class="btn" type="button">Legg í kurvin</button></div>
+                </article>
+                <article class="product card birki">
+                    <svg class="art" viewBox="0 0 240 160" role="img" aria-label="Smábolli úr birki"><use href="#i-bolli"/></svg>
+                    <h3>Smábolli</h3>
+                    <p class="meta">Birki · Ø 14 cm</p>
+                    <div class="buy"><span class="price">295 kr.</span><button class="btn" type="button">Legg í kurvin</button></div>
+                </article>
+            </div>
+        </section>
+
+        <section class="shelf" id="skeribretti" aria-labelledby="skeribretti-h">
+            <h2 class="section-title" id="skeribretti-h">Skeribretti</h2>
+            <div class="products">
+                <article class="product card eik">
+                    <svg class="art" viewBox="0 0 240 160" role="img" aria-label="Skeribretti úr eik"><use href="#i-skeribretti"/></svg>
+                    <h3>Skeribretti við handfangi</h3>
+                    <p class="meta">Eik · 40 × 22 cm</p>
+                    <div class="buy"><span class="price">495 kr.</span><button class="btn" type="button">Legg í kurvin</button></div>
+                </article>
+                <article class="product card birki">
+                    <svg class="art" viewBox="0 0 240 160" role="img" aria-label="Stórt skeribretti úr birki"><use href="#i-skeribretti"/></svg>
+                    <h3>Stórt skeribretti</h3>
+                    <p class="meta">Birki · 50 × 30 cm</p>
+                    <div class="buy"><span class="price">695 kr.</span><button class="btn" type="button">Legg í kurvin</button></div>
+                </article>
+                <article class="product card kirsuber">
+                    <svg class="art" viewBox="0 0 240 160" role="img" aria-label="Ostabretti úr kirsuberjatræi"><use href="#i-skeribretti"/></svg>
+                    <h3>Ostabretti</h3>
+                    <p class="meta">Kirsuberjatræ · 35 × 18 cm</p>
+                    <div class="buy"><span class="price">425 kr.</span><button class="btn" type="button">Legg í kurvin</button></div>
+                </article>
+            </div>
+        </section>
+
+        <section class="shelf" id="stakar" aria-labelledby="stakar-h">
+            <h2 class="section-title" id="stakar-h">Stakar</h2>
+            <div class="products">
+                <article class="product card eik">
+                    <svg class="art" viewBox="0 0 240 160" role="img" aria-label="Høgur staki úr eik"><use href="#i-staki-hogur" x="24"/></svg>
+                    <h3>Høgur staki</h3>
+                    <p class="meta">Eik · Hædd 30 cm</p>
+                    <div class="buy"><span class="price">375 kr.</span><button class="btn" type="button">Legg í kurvin</button></div>
+                </article>
+                <article class="product card birki">
+                    <svg class="art" viewBox="0 0 240 160" role="img" aria-label="Lágur staki úr birki"><use href="#i-staki-lagur" x="-32"/></svg>
+                    <h3>Lágur staki</h3>
+                    <p class="meta">Birki · Hædd 12 cm</p>
+                    <div class="buy"><span class="price">225 kr.</span><button class="btn" type="button">Legg í kurvin</button></div>
+                </article>
+                <article class="product card kirsuber">
+                    <svg class="art" viewBox="0 0 240 160" role="img" aria-label="Tríggir stakar úr kirsuberjatræi"><use href="#i-staki-lagur" x="-88"/><use href="#i-staki-hogur" x="24"/><use href="#i-staki-lagur" x="24"/></svg>
+                    <h3>Tríggir stakar í setti</h3>
+                    <p class="meta">Kirsuberjatræ · Hædd 12–30 cm</p>
+                    <div class="buy"><span class="price">750 kr.</span><button class="btn" type="button">Legg í kurvin</button></div>
+                </article>
+            </div>
+        </section>
+
+        <section class="about" id="um-okkum" aria-labelledby="um-okkum-h">
+            <h2 class="section-title" id="um-okkum-h">Um okkum</h2>
+            <p>DS Handverk ger gávur úr træi – bollar, skeribretti og stakar. Alt verður gjørt við hond, og tí er hvør lutur eitt sindur øðrvísi.</p>
+            <div class="values">
+                <div class="card">
+                    <h3>Gjørt við hond</h3>
+                    <p>Skorið, pussað og oljað í okkara egna verkstaði.</p>
+                </div>
+                <div class="card">
+                    <h3>Náttúrlig olja</h3>
+                    <p>Bara náttúrlig olja og vaks.</p>
+                </div>
+                <div class="card">
+                    <h3>Eingir tveir eins</h3>
+                    <p>Hvør lutur hevur sítt egna mynstur.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <img src="dsh.svg" alt="" width="807" height="502">
+        © 2026 DS Handverk · Handgjørt í Føroyum
+    </footer>
+
+    <script>
+        const tal = document.getElementById('kurv-tal');
+        document.querySelectorAll('.product .btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                tal.textContent = Number(tal.textContent) + 1;
+                btn.textContent = 'Lagt í kurvin ✓';
+                btn.disabled = true;
+                setTimeout(() => {
+                    btn.textContent = 'Legg í kurvin';
+                    btn.disabled = false;
+                }, 1600);
+            });
+        });
+    </script>
+</body>
+</html>
